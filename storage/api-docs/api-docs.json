@@ -1,0 +1,1519 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Gym Multi-Tenant API",
+        "description": "API documentation for the Laravel Gym Management system",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/actions": {
+            "get": {
+                "tags": [
+                    "Actions"
+                ],
+                "summary": "List actions",
+                "operationId": "ec8eb3e9c558f6b4b6fcc091cb5b8ed2",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Actions"
+                ],
+                "summary": "Create new action",
+                "operationId": "9d3ca5cac6f4e20bcffc59a824ec82c9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "key"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Check-In"
+                                    },
+                                    "key": {
+                                        "type": "string",
+                                        "example": "check_in"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/actions/{id}": {
+            "get": {
+                "tags": [
+                    "Actions"
+                ],
+                "summary": "Get action by ID",
+                "operationId": "d832fd7933709a0886845c2ccaf73d45",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Actions"
+                ],
+                "summary": "Update an existing action",
+                "operationId": "1821602a5cd20f037398431bd3128399",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "key"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Check-Out"
+                                    },
+                                    "key": {
+                                        "type": "string",
+                                        "example": "check_out"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Actions"
+                ],
+                "summary": "Delete an action",
+                "operationId": "daa51bf1bd1436b79a7f88f8cc88df22",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register a new user",
+                "operationId": "3ab1ff58e6d30faee19a7b6405b8a694",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User registered"
+                    }
+                }
+            }
+        },
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login a user",
+                "operationId": "72da9856cfaf0c9d012815b263d9f6eb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    }
+                }
+            }
+        },
+        "/api/v1/me": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get current authenticated user",
+                "operationId": "91951f3233c16de74ae44a484f8d53dc",
+                "responses": {
+                    "200": {
+                        "description": "User profile"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout the user",
+                "operationId": "123b6a1d11c0b146b02d569fe51da5a8",
+                "responses": {
+                    "200": {
+                        "description": "User logged out"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/refresh": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Refresh JWT token",
+                "operationId": "f189259787c5ae85ac996c1f485b4f50",
+                "responses": {
+                    "200": {
+                        "description": "Token refreshed"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/branches": {
+            "get": {
+                "tags": [
+                    "Branches"
+                ],
+                "summary": "Get list of branches",
+                "operationId": "ad820ebe136953fdc3366c5bc5cc54f1",
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Optional filters",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Branches"
+                ],
+                "summary": "Create a new branch",
+                "operationId": "e43f7bd6cc2b1cce23552a9fe71ba519",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreBranchRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/branches/{id}": {
+            "get": {
+                "tags": [
+                    "Branches"
+                ],
+                "summary": "Get branch by ID",
+                "operationId": "016f17debb8d9d7b65ce115c6da4530e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Branch not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Branches"
+                ],
+                "summary": "Update an existing branch",
+                "operationId": "39931fc92262f0ef05caaf266aa631fd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBranchRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Branches"
+                ],
+                "summary": "Delete a branch",
+                "operationId": "8fc1a339b6340b9bd2d108b1f3e16d68",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted successfully"
+                    },
+                    "404": {
+                        "description": "Branch not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/cities": {
+            "get": {
+                "tags": [
+                    "Cities"
+                ],
+                "summary": "Get list of cities",
+                "operationId": "19c198ca7a52b85bd48759713368b62c",
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Optional filters",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Cities"
+                ],
+                "summary": "Create a new city",
+                "operationId": "65c199e29c92fb5c4461256a7eecebc5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "country_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "City created"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/cities/{id}": {
+            "get": {
+                "tags": [
+                    "Cities"
+                ],
+                "summary": "Get city by ID",
+                "operationId": "c9e957f580378fa298b78507cf4a4c3e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "City not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Cities"
+                ],
+                "summary": "Update a city",
+                "operationId": "41dedbb5c560aae5546829626129cd3d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "country_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "City updated"
+                    },
+                    "404": {
+                        "description": "City not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Cities"
+                ],
+                "summary": "Delete a city",
+                "operationId": "0f17db22f38516d8a8e0d5b9336e1770",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "City deleted"
+                    },
+                    "404": {
+                        "description": "City not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/features": {
+            "get": {
+                "tags": [
+                    "Features"
+                ],
+                "summary": "List all features",
+                "operationId": "8db7ce443f5f1605c5052575cdc49c95",
+                "responses": {
+                    "200": {
+                        "description": "List of features"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Features"
+                ],
+                "summary": "Create a new feature",
+                "operationId": "139a69b3e5eea834535440cd43975fcf",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "key"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "key": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Feature created"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/features/{id}": {
+            "get": {
+                "tags": [
+                    "Features"
+                ],
+                "summary": "Get a feature by ID",
+                "operationId": "facc4fb44f03a604dff28af74e68350a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Feature details"
+                    },
+                    "404": {
+                        "description": "Feature not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Features"
+                ],
+                "summary": "Update a feature",
+                "operationId": "5e0a61bda852feb9d3a3b87c8d005981",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "key": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Feature updated"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Features"
+                ],
+                "summary": "Delete a feature",
+                "operationId": "7a4dc18aebc0d9e7931755fa539fb59b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Feature deleted"
+                    },
+                    "404": {
+                        "description": "Feature not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/gyms": {
+            "get": {
+                "tags": [
+                    "Gyms"
+                ],
+                "summary": "Get list of gyms",
+                "operationId": "b6f8616911aeb2fa518f0dab7442fbe3",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Gyms"
+                ],
+                "summary": "Create new gym with sub-data",
+                "operationId": "9f96cc1c72afbb7c741e1cbad2b9e61e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreGymRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
+            }
+        },
+        "/api/v1/gyms/{id}": {
+            "get": {
+                "tags": [
+                    "Gyms"
+                ],
+                "summary": "Show a single gym",
+                "operationId": "e186626d4d4417a9bc837ac703bad2fa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Gyms"
+                ],
+                "summary": "Update a gym and its related data",
+                "operationId": "a1004bba61453841cf4c8fbea22bf27a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateGymRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Gyms"
+                ],
+                "summary": "Delete a gym and all related records",
+                "operationId": "19cad5a9d9b8b2c96c54a8085ce8120e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted"
+                    }
+                }
+            }
+        },
+        "/api/v1/subscription-plans": {
+            "get": {
+                "tags": [
+                    "Subscription Plans"
+                ],
+                "summary": "List all subscription plans",
+                "operationId": "888991059abc64fc4a0c9f763bba7d89",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Subscription Plans"
+                ],
+                "summary": "Create a new subscription plan",
+                "operationId": "7d1259173d96f3c795e0468995e6faae",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreSubscriptionPlanRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/subscription-plans/{id}": {
+            "get": {
+                "tags": [
+                    "Subscription Plans"
+                ],
+                "summary": "Get a specific subscription plan",
+                "operationId": "2e81dd514abf026372a0b90c7afe0a96",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Subscription Plans"
+                ],
+                "summary": "Update a subscription plan",
+                "operationId": "ac4d4102436fdb91e66ca413da87a901",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateSubscriptionPlanRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Subscription Plans"
+                ],
+                "summary": "Delete a subscription plan",
+                "operationId": "752148f02adfe4ca786e8ad7cb50ba58",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "StoreBranchRequest": {
+                "required": [
+                    "en_name",
+                    "ar_name",
+                    "gym_id",
+                    "city_id",
+                    "subscribe_date",
+                    "expire_date",
+                    "capacity",
+                    "status"
+                ],
+                "properties": {
+                    "en_name": {
+                        "type": "string",
+                        "example": "Main Branch"
+                    },
+                    "ar_name": {
+                        "type": "string",
+                        "example": "الفرع الرئيسي"
+                    },
+                    "gym_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "city_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "subscribe_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-01-01"
+                    },
+                    "expire_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-12-31"
+                    },
+                    "capacity": {
+                        "type": "integer",
+                        "example": 100
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "active",
+                            "inactive"
+                        ],
+                        "example": "active"
+                    },
+                    "contact": {
+                        "properties": {
+                            "facebook": {
+                                "type": "string",
+                                "example": "https://facebook.com/branch"
+                            },
+                            "twitter": {
+                                "type": "string",
+                                "example": "https://twitter.com/branch"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "addresses": {
+                        "properties": {
+                            "address": {
+                                "type": "string",
+                                "example": "123 Main St"
+                            },
+                            "latitude": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 30.0444
+                            },
+                            "longitude": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 31.2357
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "configs": {
+                        "type": "object"
+                    },
+                    "commerces": {
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreGymRequest": {
+                "required": [
+                    "en_name",
+                    "ar_name",
+                    "email"
+                ],
+                "properties": {
+                    "en_name": {
+                        "description": "StoreGymRequest",
+                        "type": "string",
+                        "example": "Gold Gym"
+                    },
+                    "ar_name": {
+                        "type": "string",
+                        "example": "جولد جيم"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "gold@gym.com"
+                    },
+                    "mobile": {
+                        "type": "string",
+                        "example": "+20123456789"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "active",
+                            "inactive",
+                            "expired",
+                            "suspended"
+                        ]
+                    },
+                    "subscription_plan_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "branding": {
+                        "properties": {
+                            "main_color": {
+                                "type": "string",
+                                "example": "#111111"
+                            },
+                            "second_color": {
+                                "type": "string",
+                                "example": "#eeeeee"
+                            },
+                            "cover": {
+                                "type": "string",
+                                "format": "binary"
+                            },
+                            "logo": {
+                                "type": "string",
+                                "format": "binary"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "policies": {
+                        "properties": {
+                            "en_terms": {
+                                "type": "string",
+                                "example": "English terms..."
+                            },
+                            "ar_terms": {
+                                "type": "string",
+                                "example": "الشروط بالعربية..."
+                            },
+                            "en_policy": {
+                                "type": "string",
+                                "example": "English policy..."
+                            },
+                            "ar_policy": {
+                                "type": "string",
+                                "example": "السياسة بالعربية..."
+                            },
+                            "privacy_file": {
+                                "description": "Upload a privacy policy file",
+                                "type": "string",
+                                "format": "binary"
+                            },
+                            "side_effects_file": {
+                                "description": "Upload a side effects file",
+                                "type": "string",
+                                "format": "binary"
+                            },
+                            "faq_file": {
+                                "description": "Upload an FAQ document",
+                                "type": "string",
+                                "format": "binary"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "domain": {
+                        "required": [
+                            "domain"
+                        ],
+                        "properties": {
+                            "domain": {
+                                "type": "string",
+                                "example": "example.com"
+                            },
+                            "is_primary": {
+                                "type": "boolean",
+                                "example": true
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreSubscriptionPlanRequest": {
+                "required": [
+                    "name",
+                    "price",
+                    "duration"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Gold Plan"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 199.99
+                    },
+                    "duration": {
+                        "description": "Duration in days",
+                        "type": "integer",
+                        "example": 30
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Access to all gym facilities"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateBranchRequest": {
+                "properties": {
+                    "en_name": {
+                        "type": "string",
+                        "example": "Main Branch"
+                    },
+                    "ar_name": {
+                        "type": "string",
+                        "example": "الفرع الرئيسي"
+                    },
+                    "gym_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "city_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "subscribe_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-01-01"
+                    },
+                    "expire_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-12-31"
+                    },
+                    "capacity": {
+                        "type": "integer",
+                        "example": 100
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "active",
+                            "inactive"
+                        ],
+                        "example": "active"
+                    },
+                    "contact": {
+                        "properties": {
+                            "facebook": {
+                                "type": "string",
+                                "example": "https://facebook.com/branch"
+                            },
+                            "twitter": {
+                                "type": "string",
+                                "example": "https://twitter.com/branch"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "addresses": {
+                        "properties": {
+                            "address": {
+                                "type": "string",
+                                "example": "123 Main St"
+                            },
+                            "latitude": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 30.0444
+                            },
+                            "longitude": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 31.2357
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "configs": {
+                        "type": "object"
+                    },
+                    "commerces": {
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateGymRequest": {
+                "properties": {
+                    "en_name": {
+                        "type": "string",
+                        "example": "Gold Gym"
+                    },
+                    "ar_name": {
+                        "type": "string",
+                        "example": "جولد جيم"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "info@gym.com"
+                    },
+                    "mobile": {
+                        "type": "string",
+                        "example": "+20123456789"
+                    },
+                    "subscription_plan_id": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "branding": {
+                        "properties": {
+                            "main_color": {
+                                "type": "string",
+                                "example": "#f4b400"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "contacts": {
+                        "properties": {
+                            "facebook": {
+                                "type": "string",
+                                "example": "fb.com/updated"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateSubscriptionPlanRequest": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Gold Plan"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 199.99
+                    },
+                    "duration": {
+                        "description": "Duration in days",
+                        "type": "integer",
+                        "example": 30
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Access to all gym facilities"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "requestBodies": {
+            "StoreGymRequest": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StoreGymRequest"
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Actions",
+            "description": "API Endpoints for managing system actions"
+        },
+        {
+            "name": "Auth"
+        },
+        {
+            "name": "Branches",
+            "description": "API Endpoints for managing Branches"
+        },
+        {
+            "name": "Cities",
+            "description": "API Endpoints for managing cities"
+        },
+        {
+            "name": "Features",
+            "description": "API Endpoints for Features"
+        },
+        {
+            "name": "Gyms",
+            "description": "API Endpoints for managing Gyms"
+        },
+        {
+            "name": "Subscription Plans",
+            "description": "API Endpoints for managing subscription plans"
+        }
+    ]
+}
