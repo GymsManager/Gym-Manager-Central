@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('actions', function (Blueprint $table) {
             $table->id();
             $table->string('key')->unique();
+<<<<<<< HEAD
             $table->string('name');
+=======
+            $table->json('name');
+>>>>>>> 51bd07d (Gym-review)
             $table->timestamps();
         });
     }

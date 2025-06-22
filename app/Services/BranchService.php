@@ -26,6 +26,10 @@ class BranchService
 
             $data['created_by'] = auth()->id();
             $data['updated_by'] = auth()->id();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 51bd07d (Gym-review)
             $data['name'] = [
                 'en' => $data['en_name'] ?? '',
                 'ar' => $data['ar_name'] ?? '',
@@ -48,6 +52,7 @@ class BranchService
 
             $data['updated_by'] = auth()->id();
 
+<<<<<<< HEAD
             $gym = $this->repo->update($id, $data);
 
             $gym->branding()->updateOrCreate([], $data['branding'] ?? []);
@@ -58,6 +63,23 @@ class BranchService
             $gym->commerce()->updateOrCreate([], $data['commerce'] ?? []);
 
             return $gym->load(['branding', 'contacts', 'addresses', 'policies', 'configs', 'commerce']);
+=======
+            if (isset($data['en_name']) || isset($data['ar_name'])) {
+                $data['name'] = [
+                    'en' => $data['en_name'] ?? '',
+                    'ar' => $data['ar_name'] ?? '',
+                ];
+            }
+
+            $gym = $this->repo->update($id, $data);
+
+            $gym->Contacts()->updateOrCreate([], $data['contact'] ?? []);
+            $gym->Addresses()->updateOrCreate([], $data['addresses'] ?? []);
+            $gym->Configs()->updateOrCreate([], $data['configs'] ?? []);
+            $gym->Commerces()->updateOrCreate([], $data['commerces'] ?? []);
+
+            return $gym->load(['Contacts', 'Addresses', 'Configs','Commerces']);
+>>>>>>> 51bd07d (Gym-review)
         });
     }
 
@@ -66,6 +88,7 @@ class BranchService
         return DB::transaction(function () use ($id) {
             $gym = $this->repo->find($id);
 
+<<<<<<< HEAD
             // Delete related models first (if needed)
             $gym->branding()->delete();
             $gym->contacts()->delete();
@@ -73,6 +96,12 @@ class BranchService
             $gym->policies()->delete();
             $gym->configs()->delete();
             $gym->commerce()->delete();
+=======
+            $gym->Contacts()->delete();
+            $gym->Addresses()->delete();
+            $gym->Configs()->delete();
+            $gym->Commerces()->delete();
+>>>>>>> 51bd07d (Gym-review)
 
             return $this->repo->delete($id);
         });

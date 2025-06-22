@@ -2,6 +2,7 @@
 
 namespace App\Resources;
 
+<<<<<<< HEAD
 use app\Resources\GymAddressesResource;
 use App\Resources\GymBrandingResource;
 use app\Resources\GymCommerceResource;
@@ -10,6 +11,12 @@ use app\Resources\GymContactsResource;
 use app\Resources\GymPoliciesResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Request;
+=======
+use App\Resources\GymBrandingResource;
+use App\Resources\GymDomainResource;
+use App\Resources\GymPoliciesResource;
+use Illuminate\Http\Resources\Json\JsonResource;
+>>>>>>> 51bd07d (Gym-review)
 
 
 class GymResource extends JsonResource
@@ -20,6 +27,7 @@ class GymResource extends JsonResource
             'id' => $this->id,
             'code' => $this->code,
             'slug' => $this->slug,
+<<<<<<< HEAD
             'name' => [
                 'en' => $this->en_name,
                 'ar' => $this->ar_name,
@@ -41,6 +49,32 @@ class GymResource extends JsonResource
             'policies' => new GymPoliciesResource($this->whenLoaded('policies')),
             'config' => new GymConfigsResource($this->whenLoaded('configs')),
             'commerce' => new GymCommerceResource($this->whenLoaded('commerce')),
+=======
+            'name' => $this->name,
+            'status' => $this->status,
+            'subscription_plan' => $this->whenLoaded('subscriptionPlan'),
+            'has_application' => $this->has_application,
+
+            'branding' => new GymBrandingResource($this->whenLoaded('branding')),
+            'policies' => new GymPoliciesResource($this->whenLoaded('policies')),
+            'domain' => new GymDomainResource($this->whenLoaded('domain')),
+            'features' => $this->whenLoaded('features', function () {
+                return $this->features->map(function ($feature) {
+                    return [
+                        'name' => $feature->name,
+                        'is_enabled' => $feature->pivot->is_enabled,
+                    ];
+                });
+            }),
+            'actions' => $this->whenLoaded('actions', function () {
+                return $this->actions->map(function ($action) {
+                    return [
+                        'name' => $action->name,
+                        'is_enabled' => $action->pivot->is_enabled,
+                    ];
+                });
+            }),
+>>>>>>> 51bd07d (Gym-review)
 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

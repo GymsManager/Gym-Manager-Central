@@ -3,12 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+<<<<<<< HEAD
 use Illuminate\Database\Eloquent\SoftDeletes;
+=======
+>>>>>>> 51bd07d (Gym-review)
 use App\Traits\HandlesFileAttributes;
 
 class GymPolicies extends Model
 {
+<<<<<<< HEAD
     use HandlesFileAttributes, SoftDeletes;
+=======
+    use HandlesFileAttributes;
+>>>>>>> 51bd07d (Gym-review)
 
     protected $table = 'gym_policies';
 
@@ -22,7 +29,10 @@ class GymPolicies extends Model
         'faq_file',
     ];
 
+<<<<<<< HEAD
     // ✅ Only in the model, NOT in the trait
+=======
+>>>>>>> 51bd07d (Gym-review)
     protected $fileAttributes = [
         'privacy_file',
         'side_effects_file',

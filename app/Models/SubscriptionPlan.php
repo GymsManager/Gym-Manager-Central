@@ -3,19 +3,32 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+<<<<<<< HEAD
+=======
+use Illuminate\Support\Str;
+>>>>>>> 51bd07d (Gym-review)
 
 class SubscriptionPlan extends Model
 {
     protected $fillable = [
         'name',
+<<<<<<< HEAD
         'slug',
         'description',
+=======
+        'description',
+        'currency',
+>>>>>>> 51bd07d (Gym-review)
         'price',
         'duration_in_days',
         'features',
         'is_active',
     ];
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 51bd07d (Gym-review)
     /**
      * The attributes that should be cast to native types.
      *
@@ -23,6 +36,12 @@ class SubscriptionPlan extends Model
      */
     protected $casts = [
         'features' => 'array',
+<<<<<<< HEAD
+=======
+        'is_active' => 'boolean',
+        'name' => 'array',
+        'description' => 'array',
+>>>>>>> 51bd07d (Gym-review)
     ];
 
     /**

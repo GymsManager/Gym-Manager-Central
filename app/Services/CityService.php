@@ -2,6 +2,10 @@
 
 namespace App\Services;
 
+<<<<<<< HEAD
+=======
+use App\Models\City;
+>>>>>>> 51bd07d (Gym-review)
 use App\Repositories\Interfaces\CityRepositoryInterface;
 
 class CityService
@@ -20,11 +24,37 @@ class CityService
 
     public function store(array $data)
     {
+<<<<<<< HEAD
         return $this->repo->create($data);
     }
     public function update(int $id, array $data)
     {
         return $this->repo->update($id, $data);
+=======
+        $data['name'] = [
+            'ar' => $data['name_ar'] ?? null,
+            'en' => $data['name_en'] ?? null,
+        ];
+        unset($data['name_ar'], $data['name_en']);
+
+        return $this->repo->create($data);
+    }
+    public function update(City $city, array $data)
+    {
+        if (isset($data['name_ar']) || isset($data['name_en'])) {
+            $existingName = $city->name ?? [];
+
+            $updatedName = [
+                'ar' => $data['name_ar'] ?? ($existingName['ar'] ?? null),
+                'en' => $data['name_en'] ?? ($existingName['en'] ?? null),
+            ];
+
+            $data['name'] = $updatedName;
+
+            unset($data['name_ar'], $data['name_en']);
+        }
+        return $this->repo->update($city, $data);
+>>>>>>> 51bd07d (Gym-review)
     }
     public function delete(int $id)
     {

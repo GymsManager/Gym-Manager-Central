@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('subscription_plans', function (Blueprint $table) {
             $table->id();
+<<<<<<< HEAD
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
@@ -20,6 +21,14 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->integer('duration_in_days');
             $table->json('features')->nullable();
+=======
+            $table->json('name');
+            $table->json('description')->nullable();
+            $table->string('currency')->default('USD');
+            $table->decimal('price', 10, 2);
+            $table->integer('duration_in_days');
+            // $table->json('features')->nullable();
+>>>>>>> 51bd07d (Gym-review)
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

@@ -21,6 +21,13 @@ return new class extends Migration
             $table->enum('status', ['active', 'inactive', 'expired', 'suspended'])->default('active')->index();
             $table->boolean('has_application')->default(false);
             $table->foreignId('subscription_plan_id')->nullable()->constrained()->index();
+<<<<<<< HEAD
+=======
+            $table->uuid('client_key')->unique()->nullable()->index();
+            $table->string('shared_secret', 64)->nullable();
+            $table->boolean('is_registered')->default(false)->index();
+            $table->timestamp('registered_at')->nullable();
+>>>>>>> 51bd07d (Gym-review)
             $table->timestamps();
             $table->softDeletes();
             $table->foreignId('created_by')->nullable()->constrained('users');

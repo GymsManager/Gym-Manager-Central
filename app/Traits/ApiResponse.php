@@ -1,6 +1,10 @@
 <?php
 
 namespace App\Traits;
+<<<<<<< HEAD
+=======
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+>>>>>>> 51bd07d (Gym-review)
 
 trait ApiResponse
 {
@@ -22,6 +26,15 @@ trait ApiResponse
             'status' => $code
         ];
 
+<<<<<<< HEAD
+=======
+        if ($errors instanceof ModelNotFoundException) {
+            $model = class_basename($errors->getModel());
+
+            return $this->error("{$model} not found.", null, 404);
+        }
+
+>>>>>>> 51bd07d (Gym-review)
         if (!is_null($errors)) {
             $response['errors'] = $errors;
         }

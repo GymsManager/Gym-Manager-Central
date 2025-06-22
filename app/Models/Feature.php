@@ -6,5 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Feature extends Model
 {
+<<<<<<< HEAD
     //
+=======
+    protected $fillable = ['key', 'name'];
+
+    protected $casts = [
+        'name' => 'array',
+    ];
+>>>>>>> 51bd07d (Gym-review)
 }

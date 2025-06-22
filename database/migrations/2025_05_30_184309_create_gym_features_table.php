@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('features', function (Blueprint $table) {
+        Schema::create('gym_features', function (Blueprint $table) {
             $table->id();
-            $table->string('key')->unique();
-<<<<<<< HEAD
-            $table->string('name');
-=======
-            $table->json('name');
->>>>>>> 51bd07d (Gym-review)
+            $table->foreignId('gym_id')->constrained()->onDelete('cascade');
+            $table->foreignId('feature_id')->constrained()->onDelete('cascade');
+            $table->boolean('is_enabled')->default(false);
             $table->timestamps();
+
+            $table->unique(['gym_id', 'feature_id']);
+
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('features');
+        Schema::dropIfExists('gym_features');
     }
 };

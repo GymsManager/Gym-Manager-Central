@@ -29,13 +29,22 @@ class BranchController extends Controller
      *     summary="Get list of branches",
      *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
-     *         name="filter",
+     *         name="name",
      *         in="query",
-     *         description="Optional filters",
+     *         description="Filter by branch name",
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
-     *     @OA\Response(response=200, description="Successful operation")
+     *     @OA\Parameter(
+     *         name="status",
+     *         in="query",
+     *         description="Filter by branch status",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response=200, description="Successful operation"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=500, description="Server error")
      * )
      */
     public function index(Request $request)
@@ -56,7 +65,9 @@ class BranchController extends Controller
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(response=200, description="Successful operation"),
-     *     @OA\Response(response=404, description="Branch not found")
+     *     @OA\Response(response=404, description="Not found"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=500, description="Server error")
      * )
      */
     public function show(int $id)
@@ -75,7 +86,9 @@ class BranchController extends Controller
      *         @OA\JsonContent(ref="#/components/schemas/StoreBranchRequest")
      *     ),
      *     @OA\Response(response=201, description="Created"),
-     *     @OA\Response(response=422, description="Validation error")
+     *     @OA\Response(response=422, description="Validation Error"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=500, description="Server error")
      * )
      */
     public function store(StoreBranchRequest $request)
@@ -100,8 +113,10 @@ class BranchController extends Controller
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/UpdateBranchRequest")
      *     ),
-     *     @OA\Response(response=200, description="Updated successfully"),
-     *     @OA\Response(response=422, description="Validation error")
+     *     @OA\Response(response=200, description="Branch updated successfully"),
+     *     @OA\Response(response=404, description="Branch not found"),
+     *     @OA\Response(response=422, description="Validation failed"),
+     *     @OA\Response(response=500, description="Server error")
      * )
      */
     public function update(UpdateBranchRequest $request, int $id)
@@ -121,8 +136,10 @@ class BranchController extends Controller
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response=200, description="Deleted successfully"),
-     *     @OA\Response(response=404, description="Branch not found")
+    *     @OA\Response(response=204, description="branch deleted successfully"),
+    *     @OA\Response(response=404, description="branch not found"),
+    *     @OA\Response(response=401, description="Unauthenticated"),
+    *     @OA\Response(response=500, description="Server error")
      * )
      */
     public function destroy(int $id)

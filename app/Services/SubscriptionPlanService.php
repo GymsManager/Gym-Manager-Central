@@ -7,7 +7,11 @@ use App\Repositories\Interfaces\SubscriptionPlanRepositoryInterface;
 class SubscriptionPlanService
 {
 
+<<<<<<< HEAD
     public function __construct(protected SubscriptionPlanRepositoryInterface $subscriptionPlanRepository){}
+=======
+    public function __construct(protected SubscriptionPlanRepositoryInterface $subscriptionPlanRepository) {}
+>>>>>>> 51bd07d (Gym-review)
 
     public function list(array $filters = [])
     {
@@ -21,10 +25,54 @@ class SubscriptionPlanService
 
     public function store(array $data)
     {
+<<<<<<< HEAD
+=======
+        $data['name'] = [
+            'ar' => $data['name_ar'] ?? null,
+            'en' => $data['name_en'] ?? null,
+        ];
+        $data['description'] = [
+            'ar' => $data['description_ar'] ?? null,
+            'en' => $data['description_en'] ?? null,
+        ];
+
+        unset($data['name_ar'], $data['name_en']);
+        unset($data['description_ar'], $data['description_en']);
+
+>>>>>>> 51bd07d (Gym-review)
         return $this->subscriptionPlanRepository->create($data);
     }
     public function update(int $id, array $data)
     {
+<<<<<<< HEAD
+=======
+        if (isset($data['name_ar']) || isset($data['name_en'])) {
+            $existingName = $data->name ?? [];
+
+            $updatedName = [
+                'ar' => $data['name_ar'] ?? ($existingName['ar'] ?? null),
+                'en' => $data['name_en'] ?? ($existingName['en'] ?? null),
+            ];
+
+            $data['name'] = $updatedName;
+
+            unset($data['name_ar'], $data['name_en']);
+        }
+
+        if (isset($data['description_ar']) || isset($data['description_en'])) {
+            $existingName = $data->description ?? [];
+
+            $updatedName = [
+                'ar' => $data['description_ar'] ?? ($existingName['ar'] ?? null),
+                'en' => $data['description_en'] ?? ($existingName['en'] ?? null),
+            ];
+
+            $data['description'] = $updatedName;
+
+            unset($data['description_ar'], $data['description_en']);
+        }
+
+>>>>>>> 51bd07d (Gym-review)
         return $this->subscriptionPlanRepository->update($id, $data);
     }
     public function delete(int $id)

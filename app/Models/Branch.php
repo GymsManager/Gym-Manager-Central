@@ -2,10 +2,22 @@
 
 namespace App\Models;
 
+<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Model;
 
 class Branch extends Model
 {
+=======
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Branch extends Model
+{
+
+    use HasFactory, SoftDeletes;
+
+>>>>>>> 51bd07d (Gym-review)
     protected $fillable = [
         'gym_id',
         'city_id',
