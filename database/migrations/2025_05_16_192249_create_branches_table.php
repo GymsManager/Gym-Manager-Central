@@ -22,6 +22,10 @@ return new class extends Migration
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
 
+            $table->softDeletes();
+            $table->foreignId('created_by')->nullable()->constrained('users');
+            $table->foreignId('updated_by')->nullable()->constrained('users');
+
             $table->foreign('gym_id', 'branches_gym_id_foreign')->references('id')->on('gyms');
             $table->foreign('city_id', 'branches_city_id_foreign')->references('id')->on('cities');
         });

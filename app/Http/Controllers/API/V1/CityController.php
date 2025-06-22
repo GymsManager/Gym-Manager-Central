@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Services\CityService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
@@ -81,8 +82,8 @@ class CityController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             type="object",
-     *             @OA\Property(property="name", type="string"),
-     *             @OA\Property(property="country_id", type="integer")
+     *             @OA\Property(property="name_en", type="string" , example="City Name"),
+     *             @OA\Property(property="name_ar", type="string" ,example="المدينة"),
      *         )
      *     ),
      *     @OA\Response(
@@ -97,6 +98,11 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name_en' => 'required|string',
+            'name_ar' => 'nullable|string',
+        ]);
+
         return $this->service->store($request->all());
     }
 
@@ -116,8 +122,8 @@ class CityController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             type="object",
-     *             @OA\Property(property="name", type="string"),
-     *             @OA\Property(property="country_id", type="integer")
+     *            @OA\Property(property="name_en", type="string", example="Updated City Name"),
+     *            @OA\Property(property="name_ar", type="string", example="المدينة المحدثة"),
      *         )
      *     ),
      *     @OA\Response(
@@ -130,9 +136,9 @@ class CityController extends Controller
      *     )
      * )
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, City $city)
     {
-        return $this->service->update($id, $request->all());
+        return $this->service->update($city, $request->all());
     }
 
     /**

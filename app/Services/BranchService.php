@@ -48,16 +48,21 @@ class BranchService
 
             $data['updated_by'] = auth()->id();
 
+            if (isset($data['en_name']) || isset($data['ar_name'])) {
+                $data['name'] = [
+                    'en' => $data['en_name'] ?? '',
+                    'ar' => $data['ar_name'] ?? '',
+                ];
+            }
+
             $gym = $this->repo->update($id, $data);
 
-            $gym->branding()->updateOrCreate([], $data['branding'] ?? []);
-            $gym->contacts()->updateOrCreate([], $data['contacts'] ?? []);
-            $gym->addresses()->updateOrCreate([], $data['addresses'] ?? []);
-            $gym->policies()->updateOrCreate([], $data['policies'] ?? []);
-            $gym->configs()->updateOrCreate([], $data['config'] ?? []);
-            $gym->commerce()->updateOrCreate([], $data['commerce'] ?? []);
+            $gym->Contacts()->updateOrCreate([], $data['contact'] ?? []);
+            $gym->Addresses()->updateOrCreate([], $data['addresses'] ?? []);
+            $gym->Configs()->updateOrCreate([], $data['configs'] ?? []);
+            $gym->Commerces()->updateOrCreate([], $data['commerces'] ?? []);
 
-            return $gym->load(['branding', 'contacts', 'addresses', 'policies', 'configs', 'commerce']);
+            return $gym->load(['Contacts', 'Addresses', 'Configs','Commerces']);
         });
     }
 
@@ -66,13 +71,10 @@ class BranchService
         return DB::transaction(function () use ($id) {
             $gym = $this->repo->find($id);
 
-            // Delete related models first (if needed)
-            $gym->branding()->delete();
-            $gym->contacts()->delete();
-            $gym->addresses()->delete();
-            $gym->policies()->delete();
-            $gym->configs()->delete();
-            $gym->commerce()->delete();
+            $gym->Contacts()->delete();
+            $gym->Addresses()->delete();
+            $gym->Configs()->delete();
+            $gym->Commerces()->delete();
 
             return $this->repo->delete($id);
         });

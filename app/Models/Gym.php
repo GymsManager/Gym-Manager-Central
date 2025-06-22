@@ -12,8 +12,14 @@ class Gym extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'code', 'slug', 'name', 'email', 'mobile', 'status', 'subscription_plan_id',
-        'has_application', 'created_by', 'updated_by'
+        'code',
+        'slug',
+        'name',
+        'status',
+        'subscription_plan_id',
+        'has_application',
+        'created_by',
+        'updated_by'
     ];
 
     protected $casts = [
@@ -45,27 +51,52 @@ class Gym extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function branding() { return $this->hasOne(GymBranding::class); }
+    public function branding()
+    {
+        return $this->hasOne(GymBranding::class);
+    }
 
     /**
      * Get the policies associated with the gym.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function policies() { return $this->hasOne(GymPolicies::class); }
+    public function policies()
+    {
+        return $this->hasOne(GymPolicies::class);
+    }
 
     /**
      * Get all domains associated with the gym.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function domain() { return $this->hasMany(GymDomain::class); }
+    public function domain()
+    {
+        return $this->hasOne(GymDomain::class);
+    }
 
     /**
      * Get the subscription plan that the gym belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function subscriptionPlan() { return $this->belongsTo(SubscriptionPlan::class); }
+    public function subscriptionPlan()
+    {
+        return $this->belongsTo(SubscriptionPlan::class);
+    }
 
+    public function features()
+    {
+        return $this->belongsToMany(Feature::class, 'gym_features')
+            ->withTimestamps()
+            ->withPivot('is_enabled');
+    }
+
+    public function actions()
+    {
+        return $this->belongsToMany(Action::class, 'gym_actions')
+            ->withTimestamps()
+            ->withPivot('is_enabled');
+    }
 }

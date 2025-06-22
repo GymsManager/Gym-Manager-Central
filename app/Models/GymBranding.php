@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HandlesFileAttributes;
 use Illuminate\Database\Eloquent\Model;
 
 class GymBranding extends Model
 {
+    use HandlesFileAttributes;
+
     protected $fillable = [
         'gym_id',
         'logo',
@@ -13,6 +16,10 @@ class GymBranding extends Model
         'second_color',
         'cover',
     ];
+
+    protected $fileAttributes = ['logo', 'cover'];
+
+
     /**
      * Get the gym associated with the branding.
      */
