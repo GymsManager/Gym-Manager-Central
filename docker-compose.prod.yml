@@ -16,6 +16,8 @@ services:
       - APP_ENV=production
       - APP_DEBUG=false
       - APP_KEY=${APP_KEY}
+      - APP_URL=${APP_URL}
+      - SERVER_NAME=${SERVER_NAME}
     depends_on:
       - mysql-db
     networks:
