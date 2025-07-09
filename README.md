@@ -10,14 +10,13 @@ This project uses Docker and Docker Compose to streamline local development.
 
 ---
 
----
 
 ##  Getting Started
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/GymManager-Organization/Gym-app.git
+git clone https://github.com/GymsManager/Gym-Manager-Central.git
 cd Gym-app
 ```
 
@@ -45,6 +44,7 @@ docker exec -it gym-app bash
 composer install
 php artisan key:generate
 php artisan migrate
+php artisan jwt:secret
 exit
 ```
 
