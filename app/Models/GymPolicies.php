@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\HandlesFileAttributes;
 
 class GymPolicies extends Model
 {
-    use HandlesFileAttributes, SoftDeletes;
+    use HandlesFileAttributes;
 
     protected $table = 'gym_policies';
 
@@ -22,7 +21,6 @@ class GymPolicies extends Model
         'faq_file',
     ];
 
-    // ✅ Only in the model, NOT in the trait
     protected $fileAttributes = [
         'privacy_file',
         'side_effects_file',

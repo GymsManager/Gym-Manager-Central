@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreActionRequest;
+use App\Http\Requests\UpdateActionRequest;
 use App\Services\ActionService;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -14,6 +17,9 @@ use Illuminate\Http\Request;
  */
 class ActionController extends Controller
 {
+
+    use ApiResponse;
+
     public function __construct(protected ActionService $service) {}
 
     /**
@@ -22,15 +28,15 @@ class ActionController extends Controller
      *     tags={"Actions"},
      *     summary="List actions",
      *     security={{"bearerAuth":{}}},
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation"
-     *     )
+     *     @OA\Response(response=200, description="Successful operation"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=500, description="Server error")
      * )
      */
     public function index(Request $request)
     {
-        return $this->service->list($request->all());
+        $result = $this->service->list($request->all());
+        return $this->success($result, 'Actions retrieved successfully', 200);
     }
 
     /**
@@ -45,19 +51,15 @@ class ActionController extends Controller
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Not found"
-     *     )
+     *     @OA\Response(response=200, description="Successful operation"),
+     *     @OA\Response(response=404, description="Not found"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=500, description="Server error")
      * )
      */
     public function show($id)
     {
-        return $this->service->show($id);
+        return $this->success($this->service->show($id), 'Action retrieved successfully', 200);
     }
 
     /**
@@ -68,21 +70,17 @@ class ActionController extends Controller
      *     security={{"bearerAuth":{}}},
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(
-     *             required={"name", "key"},
-     *             @OA\Property(property="name", type="string", maxLength=255, example="Check-In"),
-     *             @OA\Property(property="key", type="string", example="check_in")
-     *         )
+     *         @OA\JsonContent(ref="#/components/schemas/StoreActionRequest")
      *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="Created"
-     *     )
+     *     @OA\Response(response=201, description="Created"),
+     *     @OA\Response(response=422, description="Validation Error"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=500, description="Server error")
      * )
      */
-    public function store(Request $request)
+    public function store(StoreActionRequest $request)
     {
-        return $this->service->store($request->all());
+        return $this->success($this->service->store($request->validated()), 'Action created successfully', 201);
     }
 
     /**
@@ -99,21 +97,18 @@ class ActionController extends Controller
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(
-     *             required={"name", "key"},
-     *             @OA\Property(property="name", type="string", maxLength=255, example="Check-Out"),
-     *             @OA\Property(property="key", type="string", example="check_out")
-     *         )
+     *         @OA\JsonContent(ref="#/components/schemas/UpdateActionRequest")
      *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Updated"
-     *     )
+     *     @OA\Response(response=200, description="Updated"),
+     *     @OA\Response(response=404, description="Not found"),
+     *     @OA\Response(response=422, description="Validation Error"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=500, description="Server error")
      * )
      */
-    public function update(Request $request, $id)
+    public function update(UpdateActionRequest $request, $id)
     {
-        return $this->service->update($id, $request->all());
+        return $this->success($this->service->update($id, $request->validated()), 'Action updated successfully', 200);
     }
 
     /**
@@ -128,14 +123,14 @@ class ActionController extends Controller
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(
-     *         response=204,
-     *         description="Deleted"
-     *     )
+     *     @OA\Response(response=204, description="Deleted"),
+     *     @OA\Response(response=404, description="Not found"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=500, description="Server error")
      * )
      */
     public function destroy($id)
     {
-        return $this->service->delete($id);
+        return $this->success($this->service->delete($id), 'Action deleted successfully', 204);
     }
 }

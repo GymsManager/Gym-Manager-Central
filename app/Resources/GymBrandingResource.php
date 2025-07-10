@@ -11,8 +11,8 @@ class GymBrandingResource extends JsonResource
         return [
             'main_color' => $this->main_color,
             'second_color' => $this->second_color,
-            'cover' => $this->cover,
-            'logo' => $this->logo,
+            'cover' => $this->cover ?? null,
+            'logo' => $this->logo ?? null,
         ];
     }
 }

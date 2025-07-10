@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('subscription_plans', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->text('description')->nullable();
+            $table->json('name');
+            $table->json('description')->nullable();
             $table->string('currency')->default('USD');
             $table->decimal('price', 10, 2);
             $table->integer('duration_in_days');
-            $table->json('features')->nullable();
+            // $table->json('features')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

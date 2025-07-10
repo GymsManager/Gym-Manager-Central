@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Traits;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 trait ApiResponse
 {
@@ -21,6 +22,12 @@ trait ApiResponse
             'message' => $message,
             'status' => $code
         ];
+
+        if ($errors instanceof ModelNotFoundException) {
+            $model = class_basename($errors->getModel());
+
+            return $this->error("{$model} not found.", null, 404);
+        }
 
         if (!is_null($errors)) {
             $response['errors'] = $errors;

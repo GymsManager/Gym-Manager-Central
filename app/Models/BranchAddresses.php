@@ -13,6 +13,19 @@ class BranchAddresses extends Model
         'longitude',
     ];
 
+
+    protected $casts = [
+        'address' => 'array',
+        'latitude' => 'float',
+        'longitude' => 'float',
+    ];
+
+    protected $hidden = [
+        'created_by',
+        'updated_by',
+    ];
+
+
     /**
      * Get the Branch associated with the address.
      */

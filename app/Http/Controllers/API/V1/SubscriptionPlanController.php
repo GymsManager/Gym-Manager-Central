@@ -27,6 +27,9 @@ class SubscriptionPlanController extends Controller
      *     tags={"Subscription Plans"},
      *     summary="List all subscription plans",
      *     @OA\Response(response=200, description="Success"),
+     *     @OA\Response(response=401, description="Unauthorized"),
+     *     @OA\Response(response=403, description="Forbidden"),
+     *
      *     security={{"bearerAuth":{}}}
      * )
      */
@@ -43,6 +46,10 @@ class SubscriptionPlanController extends Controller
      *     summary="Get a specific subscription plan",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\Response(response=200, description="Success"),
+     *  *     @OA\Response(response=401, description="Unauthorized"),
+     *     @OA\Response(response=403, description="Forbidden"),
+     *     @OA\Response(response=404, description="Not Found"),
+
      *     security={{"bearerAuth":{}}}
      * )
      */
@@ -62,6 +69,10 @@ class SubscriptionPlanController extends Controller
      *         @OA\JsonContent(ref="#/components/schemas/StoreSubscriptionPlanRequest")
      *     ),
      *     @OA\Response(response=201, description="Created"),
+     *     @OA\Response(response=400, description="Bad Request"),
+     *     @OA\Response(response=401, description="Unauthorized"),
+     *     @OA\Response(response=403, description="Forbidden"),
+     *     @OA\Response(response=422, description="Validation Error"),
      *     security={{"bearerAuth":{}}}
      * )
      */
@@ -82,6 +93,11 @@ class SubscriptionPlanController extends Controller
      *         @OA\JsonContent(ref="#/components/schemas/UpdateSubscriptionPlanRequest")
      *     ),
      *     @OA\Response(response=200, description="Updated"),
+     *     @OA\Response(response=400, description="Bad Request"),
+     *     @OA\Response(response=401, description="Unauthorized"),
+     *     @OA\Response(response=403, description="Forbidden"),
+     *     @OA\Response(response=404, description="Not Found"),
+     *     @OA\Response(response=422, description="Validation Error"),
      *     security={{"bearerAuth":{}}}
      * )
      */
@@ -98,6 +114,9 @@ class SubscriptionPlanController extends Controller
      *     summary="Delete a subscription plan",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\Response(response=204, description="Deleted"),
+     *     @OA\Response(response=401, description="Unauthorized"),
+     *     @OA\Response(response=403, description="Forbidden"),
+     *     @OA\Response(response=404, description="Not Found"),
      *     security={{"bearerAuth":{}}}
      * )
      */

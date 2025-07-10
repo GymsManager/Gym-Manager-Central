@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class SubscriptionPlan extends Model
 {
     protected $fillable = [
         'name',
-        'slug',
         'description',
+        'currency',
         'price',
         'duration_in_days',
         'features',
@@ -23,6 +24,9 @@ class SubscriptionPlan extends Model
      */
     protected $casts = [
         'features' => 'array',
+        'is_active' => 'boolean',
+        'name' => 'array',
+        'description' => 'array',
     ];
 
     /**
