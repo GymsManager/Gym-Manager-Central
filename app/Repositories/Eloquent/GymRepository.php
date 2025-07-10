@@ -14,7 +14,7 @@ class GymRepository implements GymRepositoryInterface
     }
 
     public function find(int $id) {
-        return Gym::with(['branding', 'contacts','domain'])->findOrFail($id);
+        return Gym::with(['branding', 'policies', 'domain', 'features', 'actions'])->findOrFail($id);
     }
 
     public function create(array $data) {

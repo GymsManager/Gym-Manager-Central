@@ -21,10 +21,10 @@ class CityRepository implements CityRepositoryInterface
         return City::create($data);
     }
 
-    public function update(int $id, array $data) {
-        $city = City::findOrFail($id);
-        $city->update($data);
-        return $city;
+    public function update($City, array $data) {
+
+        $City->update($data);
+        return $City;
     }
 
     public function delete(int $id) {

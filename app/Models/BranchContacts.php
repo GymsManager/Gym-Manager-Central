@@ -17,6 +17,20 @@ class BranchContacts extends Model
         'pinterest',
     ];
 
+    protected $casts = [
+        'facebook' => 'string',
+        'twitter' => 'string',
+        'instagram' => 'string',
+        'youtube' => 'string',
+        'snapchat' => 'string',
+        'whatsapp' => 'string',
+        'pinterest' => 'string',
+    ];
+
+    protected $hidden = [
+        'created_by',
+        'updated_by',
+    ];
     /**
      * Get the Branch associated with the contacts.
      */

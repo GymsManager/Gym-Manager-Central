@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreFeatureRequest;
+use App\Http\Requests\UpdateFeatureRequest;
 use App\Services\FeatureService;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -14,6 +17,8 @@ use Illuminate\Http\Request;
  */
 class FeatureController extends Controller
 {
+    use ApiResponse;
+
     public function __construct(protected FeatureService $service)
     {
         $this->service = $service;
@@ -25,15 +30,18 @@ class FeatureController extends Controller
      *     summary="List all features",
      *     tags={"Features"},
      *     security={{"bearerAuth":{}}},
-     *     @OA\Response(
-     *         response=200,
-     *         description="List of features"
-     *     )
+     *     @OA\Response(response=200, description="Successful operation"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=500, description="Server error")
      * )
      */
     public function index(Request $request)
     {
-        return $this->service->list($request->all());
+        return $this->success(
+            $this->service->list($request->all()),
+            'Features retrieved successfully',
+            200
+        );
     }
 
     /**
@@ -48,19 +56,19 @@ class FeatureController extends Controller
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Feature details"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Feature not found"
-     *     )
+     *     @OA\Response(response=200, description="Successful operation"),
+     *     @OA\Response(response=404, description="Not found"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=500, description="Server error")
      * )
      */
     public function show(int $id)
     {
-        return $this->service->show($id);
+        return $this->success(
+            $this->service->show($id),
+            'Feature retrieved successfully',
+            200
+        );
     }
 
     /**
@@ -73,28 +81,24 @@ class FeatureController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             required={"name","key"},
-     *             @OA\Property(property="name", type="string", maxLength=255),
-     *             @OA\Property(property="key", type="string")
+     *             @OA\Property(property="name_en", type="string", maxLength=255, example="Live Chat"),
+     *             @OA\Property(property="name_ar", type="string", maxLength=255, example="شات مباشر"),
+     *             @OA\Property(property="key", type="string", example="live_chat")
      *         )
      *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="Feature created"
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation error"
-     *     )
+     *     @OA\Response(response=201, description="Created"),
+     *     @OA\Response(response=422, description="Validation Error"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=500, description="Server error")
      * )
      */
-    public function store(Request $request)
+    public function store(StoreFeatureRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'key' => 'required|string',
-        ]);
-
-        return $this->service->store($validated);
+        return $this->success(
+            $this->service->store($request->validated()),
+            'Feature created successfully',
+            201
+        );
     }
 
     /**
@@ -112,28 +116,25 @@ class FeatureController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="name", type="string", maxLength=255),
-     *             @OA\Property(property="key", type="string")
+     *             @OA\Property(property="name_en", type="string", maxLength=255, example="Live Chat"),
+     *             @OA\Property(property="name_ar", type="string", maxLength=255, example="شات مباشر"),
+     *             @OA\Property(property="key", type="string", example="live_chat")
      *         )
      *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Feature updated"
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation error"
-     *     )
+     *     @OA\Response(response=200, description="Updated"),
+     *     @OA\Response(response=404, description="Not found"),
+     *     @OA\Response(response=422, description="Validation Error"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=500, description="Server error")
      * )
      */
-    public function update(Request $request, int $id)
+    public function update(UpdateFeatureRequest $request, int $id)
     {
-        $validated = $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'key' => 'sometimes|required|string',
-        ]);
-
-        return $this->service->update($id, $validated);
+        return $this->success(
+            $this->service->update($id, $request->validated()),
+            'Feature updated successfully',
+            200
+        );
     }
 
     /**
@@ -148,18 +149,18 @@ class FeatureController extends Controller
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(
-     *         response=204,
-     *         description="Feature deleted"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Feature not found"
-     *     )
+     *     @OA\Response(response=204, description="Deleted"),
+     *     @OA\Response(response=404, description="Not found"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=500, description="Server error")
      * )
      */
     public function destroy(int $id)
     {
-        return $this->service->delete($id);
+        return $this->success(
+            $this->service->delete($id),
+            'Feature deleted successfully',
+            204
+        );
     }
 }

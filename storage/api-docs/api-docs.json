@@ -16,6 +16,12 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 },
                 "security": [
@@ -35,22 +41,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "name",
-                                    "key"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "maxLength": 255,
-                                        "example": "Check-In"
-                                    },
-                                    "key": {
-                                        "type": "string",
-                                        "example": "check_in"
-                                    }
-                                },
-                                "type": "object"
+                                "$ref": "#/components/schemas/StoreActionRequest"
                             }
                         }
                     }
@@ -58,6 +49,15 @@
                 "responses": {
                     "201": {
                         "description": "Created"
+                    },
+                    "422": {
+                        "description": "Validation Error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 },
                 "security": [
@@ -90,6 +90,12 @@
                     },
                     "404": {
                         "description": "Not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 },
                 "security": [
@@ -119,22 +125,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "name",
-                                    "key"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "maxLength": 255,
-                                        "example": "Check-Out"
-                                    },
-                                    "key": {
-                                        "type": "string",
-                                        "example": "check_out"
-                                    }
-                                },
-                                "type": "object"
+                                "$ref": "#/components/schemas/UpdateActionRequest"
                             }
                         }
                     }
@@ -142,6 +133,18 @@
                 "responses": {
                     "200": {
                         "description": "Updated"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "422": {
+                        "description": "Validation Error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 },
                 "security": [
@@ -169,6 +172,15 @@
                 "responses": {
                     "204": {
                         "description": "Deleted"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 },
                 "security": [
@@ -325,9 +337,18 @@
                 "operationId": "ad820ebe136953fdc3366c5bc5cc54f1",
                 "parameters": [
                     {
-                        "name": "filter",
+                        "name": "name",
                         "in": "query",
-                        "description": "Optional filters",
+                        "description": "Filter by branch name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by branch status",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -337,6 +358,12 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 },
                 "security": [
@@ -366,7 +393,13 @@
                         "description": "Created"
                     },
                     "422": {
-                        "description": "Validation error"
+                        "description": "Validation Error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 },
                 "security": [
@@ -398,7 +431,13 @@
                         "description": "Successful operation"
                     },
                     "404": {
-                        "description": "Branch not found"
+                        "description": "Not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 },
                 "security": [
@@ -435,10 +474,16 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Updated successfully"
+                        "description": "Branch updated successfully"
+                    },
+                    "404": {
+                        "description": "Branch not found"
                     },
                     "422": {
-                        "description": "Validation error"
+                        "description": "Validation failed"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 },
                 "security": [
@@ -464,11 +509,17 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Deleted successfully"
+                    "204": {
+                        "description": "branch deleted successfully"
                     },
                     "404": {
-                        "description": "Branch not found"
+                        "description": "branch not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 },
                 "security": [
@@ -519,11 +570,13 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "name": {
-                                        "type": "string"
+                                    "name_en": {
+                                        "type": "string",
+                                        "example": "City Name"
                                     },
-                                    "country_id": {
-                                        "type": "integer"
+                                    "name_ar": {
+                                        "type": "string",
+                                        "example": "المدينة"
                                     }
                                 },
                                 "type": "object"
@@ -599,11 +652,13 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "name": {
-                                        "type": "string"
+                                    "name_en": {
+                                        "type": "string",
+                                        "example": "Updated City Name"
                                     },
-                                    "country_id": {
-                                        "type": "integer"
+                                    "name_ar": {
+                                        "type": "string",
+                                        "example": "المدينة المحدثة"
                                     }
                                 },
                                 "type": "object"
@@ -665,7 +720,13 @@
                 "operationId": "8db7ce443f5f1605c5052575cdc49c95",
                 "responses": {
                     "200": {
-                        "description": "List of features"
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 },
                 "security": [
@@ -690,12 +751,19 @@
                                     "key"
                                 ],
                                 "properties": {
-                                    "name": {
+                                    "name_en": {
                                         "type": "string",
-                                        "maxLength": 255
+                                        "maxLength": 255,
+                                        "example": "Live Chat"
+                                    },
+                                    "name_ar": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "شات مباشر"
                                     },
                                     "key": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "example": "live_chat"
                                     }
                                 },
                                 "type": "object"
@@ -705,10 +773,16 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Feature created"
+                        "description": "Created"
                     },
                     "422": {
-                        "description": "Validation error"
+                        "description": "Validation Error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 },
                 "security": [
@@ -737,10 +811,16 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Feature details"
+                        "description": "Successful operation"
                     },
                     "404": {
-                        "description": "Feature not found"
+                        "description": "Not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 },
                 "security": [
@@ -771,12 +851,19 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "name": {
+                                    "name_en": {
                                         "type": "string",
-                                        "maxLength": 255
+                                        "maxLength": 255,
+                                        "example": "Live Chat"
+                                    },
+                                    "name_ar": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "شات مباشر"
                                     },
                                     "key": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "example": "live_chat"
                                     }
                                 },
                                 "type": "object"
@@ -786,10 +873,19 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Feature updated"
+                        "description": "Updated"
+                    },
+                    "404": {
+                        "description": "Not found"
                     },
                     "422": {
-                        "description": "Validation error"
+                        "description": "Validation Error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 },
                 "security": [
@@ -816,10 +912,16 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Feature deleted"
+                        "description": "Deleted"
                     },
                     "404": {
-                        "description": "Feature not found"
+                        "description": "Not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 },
                 "security": [
@@ -838,9 +940,20 @@
                 "operationId": "b6f8616911aeb2fa518f0dab7442fbe3",
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -851,7 +964,7 @@
                 "requestBody": {
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
                                 "$ref": "#/components/schemas/StoreGymRequest"
                             }
@@ -861,8 +974,22 @@
                 "responses": {
                     "201": {
                         "description": "Created"
+                    },
+                    "422": {
+                        "description": "Validation Error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/gyms/{id}": {
@@ -876,6 +1003,7 @@
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "Gym ID",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -884,20 +1012,36 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
-            "put": {
+            "post": {
                 "tags": [
                     "Gyms"
                 ],
-                "summary": "Update a gym and its related data",
-                "operationId": "a1004bba61453841cf4c8fbea22bf27a",
+                "summary": "Update a gym (using POST with _method=PUT)",
+                "description": "Updates gym details via POST method spoofing. Send `multipart/form-data` including a `_method` field with the exact value `PUT`.",
+                "operationId": "updateGymViaPostSpoofing",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "ID of the Gym to update",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -905,20 +1049,55 @@
                     }
                 ],
                 "requestBody": {
+                    "description": "Gym data including the _method field for PUT spoofing.",
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/UpdateGymRequest"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/UpdateGymRequest"
+                                    },
+                                    {
+                                        "required": [
+                                            "_method"
+                                        ],
+                                        "properties": {
+                                            "_method": {
+                                                "description": "Must be set to PUT to update the resource.",
+                                                "type": "string",
+                                                "enum": [
+                                                    "PUT"
+                                                ],
+                                                "example": "PUT"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Updated"
+                        "description": "Gym updated successfully"
+                    },
+                    "404": {
+                        "description": "Gym not found"
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -930,6 +1109,7 @@
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "Gym ID",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -938,9 +1118,23 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Deleted"
+                        "description": "Gym deleted successfully"
+                    },
+                    "404": {
+                        "description": "Gym not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/subscription-plans": {
@@ -953,6 +1147,12 @@
                 "responses": {
                     "200": {
                         "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
                     }
                 },
                 "security": [
@@ -980,6 +1180,18 @@
                 "responses": {
                     "201": {
                         "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Validation Error"
                     }
                 },
                 "security": [
@@ -1009,6 +1221,15 @@
                 "responses": {
                     "200": {
                         "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
                     }
                 },
                 "security": [
@@ -1046,6 +1267,21 @@
                 "responses": {
                     "200": {
                         "description": "Updated"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error"
                     }
                 },
                 "security": [
@@ -1073,6 +1309,15 @@
                 "responses": {
                     "204": {
                         "description": "Deleted"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
                     }
                 },
                 "security": [
@@ -1085,6 +1330,30 @@
     },
     "components": {
         "schemas": {
+            "StoreActionRequest": {
+                "required": [
+                    "name_en",
+                    "name_ar",
+                    "key"
+                ],
+                "properties": {
+                    "name_en": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Check-In"
+                    },
+                    "name_ar": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "تسجيل الدخول"
+                    },
+                    "key": {
+                        "type": "string",
+                        "example": "check_in"
+                    }
+                },
+                "type": "object"
+            },
             "StoreBranchRequest": {
                 "required": [
                     "en_name",
@@ -1144,6 +1413,26 @@
                             "twitter": {
                                 "type": "string",
                                 "example": "https://twitter.com/branch"
+                            },
+                            "instagram": {
+                                "type": "string",
+                                "example": "https://instagram.com/branch"
+                            },
+                            "youtube": {
+                                "type": "string",
+                                "example": "https://youtube.com/branch"
+                            },
+                            "snapchat": {
+                                "type": "string",
+                                "example": "https://snapchat.com/branch"
+                            },
+                            "whatsapp": {
+                                "type": "string",
+                                "example": "https://wa.me/123456789"
+                            },
+                            "pinterest": {
+                                "type": "string",
+                                "example": "https://pinterest.com/branch"
                             }
                         },
                         "type": "object"
@@ -1168,10 +1457,99 @@
                         "type": "object"
                     },
                     "configs": {
+                        "properties": {
+                            "skip_days": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Monday"
+                                }
+                            },
+                            "workout_type": {
+                                "type": "string",
+                                "example": "cardio"
+                            },
+                            "reward_points": {
+                                "type": "integer",
+                                "example": 100
+                            },
+                            "unit": {
+                                "type": "string",
+                                "example": "session"
+                            },
+                            "reward_value": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 10.5
+                            },
+                            "membership_type": {
+                                "type": "string",
+                                "example": "gold"
+                            },
+                            "vat": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 14
+                            },
+                            "coin_login": {
+                                "type": "boolean",
+                                "example": true
+                            }
+                        },
                         "type": "object"
                     },
                     "commerces": {
+                        "properties": {
+                            "tax_number": {
+                                "type": "string",
+                                "example": "123456789"
+                            },
+                            "merchant_id": {
+                                "type": "string",
+                                "example": "MID123456"
+                            },
+                            "merchant_name": {
+                                "type": "string",
+                                "example": "Merchant Name"
+                            },
+                            "merchant_key": {
+                                "type": "string",
+                                "example": "key_abcdef123456"
+                            },
+                            "currency": {
+                                "type": "string",
+                                "example": "EGP"
+                            },
+                            "commercial_register_number": {
+                                "type": "string",
+                                "example": "CRN987654"
+                            }
+                        },
                         "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreFeatureRequest": {
+                "required": [
+                    "name_en",
+                    "name_ar",
+                    "key"
+                ],
+                "properties": {
+                    "name_en": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Live Chat"
+                    },
+                    "name_ar": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "شات مباشر"
+                    },
+                    "key": {
+                        "type": "string",
+                        "example": "live_chat"
                     }
                 },
                 "type": "object"
@@ -1179,8 +1557,7 @@
             "StoreGymRequest": {
                 "required": [
                     "en_name",
-                    "ar_name",
-                    "email"
+                    "ar_name"
                 ],
                 "properties": {
                     "en_name": {
@@ -1191,15 +1568,6 @@
                     "ar_name": {
                         "type": "string",
                         "example": "جولد جيم"
-                    },
-                    "email": {
-                        "type": "string",
-                        "format": "email",
-                        "example": "gold@gym.com"
-                    },
-                    "mobile": {
-                        "type": "string",
-                        "example": "+20123456789"
                     },
                     "status": {
                         "type": "string",
@@ -1214,106 +1582,180 @@
                         "type": "integer",
                         "example": 1
                     },
-                    "branding": {
-                        "properties": {
-                            "main_color": {
-                                "type": "string",
-                                "example": "#111111"
-                            },
-                            "second_color": {
-                                "type": "string",
-                                "example": "#eeeeee"
-                            },
-                            "cover": {
-                                "type": "string",
-                                "format": "binary"
-                            },
-                            "logo": {
-                                "type": "string",
-                                "format": "binary"
-                            }
-                        },
-                        "type": "object"
+                    "has_application": {
+                        "type": "boolean",
+                        "example": false
                     },
-                    "policies": {
-                        "properties": {
-                            "en_terms": {
-                                "type": "string",
-                                "example": "English terms..."
-                            },
-                            "ar_terms": {
-                                "type": "string",
-                                "example": "الشروط بالعربية..."
-                            },
-                            "en_policy": {
-                                "type": "string",
-                                "example": "English policy..."
-                            },
-                            "ar_policy": {
-                                "type": "string",
-                                "example": "السياسة بالعربية..."
-                            },
-                            "privacy_file": {
-                                "description": "Upload a privacy policy file",
-                                "type": "string",
-                                "format": "binary"
-                            },
-                            "side_effects_file": {
-                                "description": "Upload a side effects file",
-                                "type": "string",
-                                "format": "binary"
-                            },
-                            "faq_file": {
-                                "description": "Upload an FAQ document",
-                                "type": "string",
-                                "format": "binary"
-                            }
-                        },
-                        "type": "object"
-                    },
-                    "domain": {
+                    "features": {
                         "required": [
-                            "domain"
+                            "feature_id",
+                            "is_enabled"
                         ],
                         "properties": {
-                            "domain": {
+                            "feature_id": {
+                                "description": "Feature ID",
                                 "type": "string",
-                                "example": "example.com"
+                                "example": "2"
                             },
-                            "is_primary": {
+                            "is_enabled": {
+                                "description": "Indicates if this feature is enabled",
                                 "type": "boolean",
                                 "example": true
                             }
                         },
                         "type": "object"
+                    },
+                    "actions": {
+                        "required": [
+                            "action_id",
+                            "is_enabled"
+                        ],
+                        "properties": {
+                            "action_id": {
+                                "description": "Action ID",
+                                "type": "string",
+                                "example": "2"
+                            },
+                            "is_enabled": {
+                                "description": "Indicates if this feature is enabled",
+                                "type": "boolean",
+                                "example": true
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "main_color": {
+                        "type": "string",
+                        "example": "#111111"
+                    },
+                    "second_color": {
+                        "type": "string",
+                        "example": "#eeeeee"
+                    },
+                    "en_terms": {
+                        "type": "string",
+                        "example": "English terms..."
+                    },
+                    "ar_terms": {
+                        "type": "string",
+                        "example": "الشروط بالعربية..."
+                    },
+                    "en_policy": {
+                        "type": "string",
+                        "example": "English policy..."
+                    },
+                    "ar_policy": {
+                        "type": "string",
+                        "example": "السياسة بالعربية..."
+                    },
+                    "domain": {
+                        "required": [
+                            "domain",
+                            "is_primary"
+                        ],
+                        "properties": {
+                            "domain": {
+                                "description": "Primary domain for the gym",
+                                "type": "string",
+                                "example": "example.com"
+                            },
+                            "is_primary": {
+                                "description": "Indicates if this is the primary domain",
+                                "type": "boolean",
+                                "example": true
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "cover": {
+                        "description": "Branding cover image",
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "logo": {
+                        "description": "Branding logo image",
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "privacy_file": {
+                        "description": "Upload a privacy policy file",
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "side_effects_file": {
+                        "description": "Upload a side effects file",
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "faq_file": {
+                        "description": "Upload an FAQ document",
+                        "type": "string",
+                        "format": "binary"
                     }
                 },
                 "type": "object"
             },
             "StoreSubscriptionPlanRequest": {
                 "required": [
-                    "name",
+                    "name_en",
+                    "name_ar",
                     "price",
                     "duration"
                 ],
                 "properties": {
-                    "name": {
+                    "name_en": {
                         "type": "string",
                         "example": "Gold Plan"
+                    },
+                    "name_ar": {
+                        "type": "string",
+                        "example": "خطة الذهبيه"
                     },
                     "price": {
                         "type": "number",
                         "format": "float",
                         "example": 199.99
                     },
-                    "duration": {
+                    "currency": {
+                        "type": "string",
+                        "example": "USD"
+                    },
+                    "is_active": {
+                        "description": "Indicates if the subscription plan is active",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "duration_in_days": {
                         "description": "Duration in days",
                         "type": "integer",
                         "example": 30
                     },
-                    "description": {
+                    "description_en": {
                         "type": "string",
                         "example": "Access to all gym facilities"
+                    },
+                    "description_ar": {
+                        "type": "string",
+                        "example": "الوصول إلى جميع مرافق الصالة الرياضية"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateActionRequest": {
+                "properties": {
+                    "name_en": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Check-Out"
+                    },
+                    "name_ar": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "تسجيل الخروج"
+                    },
+                    "key": {
+                        "type": "string",
+                        "example": "check_out"
                     }
                 },
                 "type": "object"
@@ -1367,6 +1809,26 @@
                             "twitter": {
                                 "type": "string",
                                 "example": "https://twitter.com/branch"
+                            },
+                            "instagram": {
+                                "type": "string",
+                                "example": "https://instagram.com/branch"
+                            },
+                            "youtube": {
+                                "type": "string",
+                                "example": "https://youtube.com/branch"
+                            },
+                            "snapchat": {
+                                "type": "string",
+                                "example": "https://snapchat.com/branch"
+                            },
+                            "whatsapp": {
+                                "type": "string",
+                                "example": "https://wa.me/123456789"
+                            },
+                            "pinterest": {
+                                "type": "string",
+                                "example": "https://pinterest.com/branch"
                             }
                         },
                         "type": "object"
@@ -1391,77 +1853,276 @@
                         "type": "object"
                     },
                     "configs": {
+                        "properties": {
+                            "skip_days": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Monday"
+                                }
+                            },
+                            "workout_type": {
+                                "type": "string",
+                                "example": "cardio"
+                            },
+                            "reward_points": {
+                                "type": "integer",
+                                "example": 100
+                            },
+                            "unit": {
+                                "type": "string",
+                                "example": "session"
+                            },
+                            "reward_value": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 10.5
+                            },
+                            "membership_type": {
+                                "type": "string",
+                                "example": "gold"
+                            },
+                            "vat": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 14
+                            },
+                            "coin_login": {
+                                "type": "boolean",
+                                "example": true
+                            }
+                        },
                         "type": "object"
                     },
                     "commerces": {
+                        "properties": {
+                            "tax_number": {
+                                "type": "string",
+                                "example": "123456789"
+                            },
+                            "merchant_id": {
+                                "type": "string",
+                                "example": "MID123456"
+                            },
+                            "merchant_name": {
+                                "type": "string",
+                                "example": "Merchant Name"
+                            },
+                            "merchant_key": {
+                                "type": "string",
+                                "example": "key_abcdef123456"
+                            },
+                            "currency": {
+                                "type": "string",
+                                "example": "EGP"
+                            },
+                            "commercial_register_number": {
+                                "type": "string",
+                                "example": "CRN987654"
+                            }
+                        },
                         "type": "object"
                     }
                 },
                 "type": "object"
             },
+            "UpdateFeatureRequest": {
+                "properties": {
+                    "name_en": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Live Chat"
+                    },
+                    "name_ar": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "شات مباشر"
+                    },
+                    "key": {
+                        "type": "string",
+                        "example": "live_chat"
+                    }
+                },
+                "type": "object"
+            },
             "UpdateGymRequest": {
+                "description": "Schema for updating gym data. Note: The _method field is added separately in the operation definition for spoofing.",
+                "required": [
+                    "en_name",
+                    "ar_name"
+                ],
                 "properties": {
                     "en_name": {
+                        "description": "UpdateGymRequest Schema Definition",
                         "type": "string",
-                        "example": "Gold Gym"
+                        "example": "Gold Gymsss"
                     },
                     "ar_name": {
                         "type": "string",
                         "example": "جولد جيم"
                     },
-                    "email": {
+                    "status": {
                         "type": "string",
-                        "format": "email",
-                        "example": "info@gym.com"
-                    },
-                    "mobile": {
-                        "type": "string",
-                        "example": "+20123456789"
+                        "enum": [
+                            "active",
+                            "inactive",
+                            "expired",
+                            "suspended"
+                        ]
                     },
                     "subscription_plan_id": {
                         "type": "integer",
-                        "example": 2
+                        "example": 1
                     },
-                    "branding": {
+                    "has_application": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "features": {
+                        "description": "JSON string or object for features",
+                        "required": [
+                            "feature_id",
+                            "is_enabled"
+                        ],
                         "properties": {
-                            "main_color": {
+                            "feature_id": {
+                                "description": "Feature ID",
                                 "type": "string",
-                                "example": "#f4b400"
+                                "example": "2"
+                            },
+                            "is_enabled": {
+                                "description": "Indicates if this feature is enabled",
+                                "type": "boolean",
+                                "example": true
                             }
                         },
                         "type": "object"
                     },
-                    "contacts": {
+                    "actions": {
+                        "description": "JSON string or object for actions",
+                        "required": [
+                            "action_id",
+                            "is_enabled"
+                        ],
                         "properties": {
-                            "facebook": {
+                            "action_id": {
+                                "description": "Action ID",
                                 "type": "string",
-                                "example": "fb.com/updated"
+                                "example": "2"
+                            },
+                            "is_enabled": {
+                                "description": "Indicates if this feature is enabled",
+                                "type": "boolean",
+                                "example": true
                             }
                         },
                         "type": "object"
+                    },
+                    "main_color": {
+                        "type": "string",
+                        "example": "#111111"
+                    },
+                    "second_color": {
+                        "type": "string",
+                        "example": "#eeeeee"
+                    },
+                    "en_terms": {
+                        "type": "string",
+                        "example": "English terms..."
+                    },
+                    "ar_terms": {
+                        "type": "string",
+                        "example": "الشروط بالعربية..."
+                    },
+                    "en_policy": {
+                        "type": "string",
+                        "example": "English policy..."
+                    },
+                    "ar_policy": {
+                        "type": "string",
+                        "example": "السياسة بالعربية..."
+                    },
+                    "domain": {
+                        "required": [
+                            "domain",
+                            "is_primary"
+                        ],
+                        "properties": {
+                            "domain": {
+                                "description": "Primary domain for the gym",
+                                "type": "string",
+                                "example": "example.com"
+                            },
+                            "is_primary": {
+                                "description": "Indicates if this is the primary domain",
+                                "type": "boolean",
+                                "example": true
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "cover": {
+                        "description": "Branding cover image (file upload)",
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "logo": {
+                        "description": "Branding logo image (file upload)",
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "privacy_file": {
+                        "description": "Upload a privacy policy file (file upload)",
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "side_effects_file": {
+                        "description": "Upload a side effects file (file upload)",
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "faq_file": {
+                        "description": "Upload an FAQ document (file upload)",
+                        "type": "string",
+                        "format": "binary"
                     }
                 },
                 "type": "object"
             },
             "UpdateSubscriptionPlanRequest": {
                 "properties": {
-                    "name": {
+                    "name_en": {
                         "type": "string",
-                        "example": "Gold Plan"
+                        "example": "Updated Gold Plan"
+                    },
+                    "name_ar": {
+                        "type": "string",
+                        "example": "خطة الذهبيه المحدّثة"
                     },
                     "price": {
                         "type": "number",
                         "format": "float",
-                        "example": 199.99
+                        "example": 149.99
                     },
-                    "duration": {
-                        "description": "Duration in days",
-                        "type": "integer",
-                        "example": 30
-                    },
-                    "description": {
+                    "currency": {
                         "type": "string",
-                        "example": "Access to all gym facilities"
+                        "example": "USD"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "duration_in_days": {
+                        "type": "integer",
+                        "example": 60
+                    },
+                    "description_en": {
+                        "type": "string",
+                        "example": "Updated access to all gym facilities"
+                    },
+                    "description_ar": {
+                        "type": "string",
+                        "example": "تحديث الوصول إلى جميع مرافق الصالة الرياضية"
                     }
                 },
                 "type": "object"
@@ -1471,7 +2132,7 @@
             "StoreGymRequest": {
                 "required": true,
                 "content": {
-                    "application/json": {
+                    "multipart/form-data": {
                         "schema": {
                             "$ref": "#/components/schemas/StoreGymRequest"
                         }

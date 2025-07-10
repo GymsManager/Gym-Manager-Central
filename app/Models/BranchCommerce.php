@@ -16,6 +16,19 @@ class BranchCommerce extends Model
         'commercial_register_number',
     ];
 
+    protected $casts = [
+        'tax_number' => 'string',
+        'merchant_id' => 'string',
+        'merchant_name' => 'string',
+        'merchant_key' => 'string',
+        'currency' => 'string',
+        'commercial_register_number' => 'string',
+    ];
+
+    protected $hidden = [
+        'created_by',
+        'updated_by',
+    ];
     /**
      * Get the Branch associated with the commerce.
      */

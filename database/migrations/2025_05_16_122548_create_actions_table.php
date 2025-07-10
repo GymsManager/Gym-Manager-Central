@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('actions', function (Blueprint $table) {
             $table->id();
             $table->string('key')->unique();
-            $table->string('name');
+            $table->json('name');
             $table->timestamps();
         });
     }

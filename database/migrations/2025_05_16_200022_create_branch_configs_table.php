@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('branch_id');
             $table->string('workout_type')->nullable();
+            $table->json('skip_days')->nullable();
             $table->integer('reward_points')->default(0);
             $table->string('unit');
             $table->decimal('reward_value', 8, 2)->default(0);
