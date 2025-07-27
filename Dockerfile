@@ -36,6 +36,9 @@ WORKDIR /var/www/html
 # Copy app files
 COPY . .
 
+# Install Composer dependencies (important!)
+RUN composer install --no-dev --optimize-autoloader
+
 # Copy production compose file
 COPY docker-compose.prod.yml ./
 
