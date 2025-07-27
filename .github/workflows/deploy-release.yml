@@ -26,7 +26,7 @@ jobs:
         run: |
           docker buildx build --platform linux/amd64 -t $IMAGE_NAME:latest . --push
 
-      - name: SSH into Droplet & deploy via docker-compose
+      - name: SSH into Droplet & deploy via docker compose
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.DROPLET_HOST }}
@@ -42,14 +42,17 @@ jobs:
             docker system df
 
             echo "⬇️ Pulling latest image..."
-            docker-compose -f docker-compose.prod.yml pull
+            docker compose -f docker-compose.prod.yml pull
 
             echo "🚀 Restarting app container only (no DB downtime)..."
-            docker-compose -f docker-compose.prod.yml up -d --no-deps app
+            docker compose -f docker-compose.prod.yml up -d --no-deps app
+
+            echo "⏳ Waiting for app container to warm up..."
+            sleep 10
 
             echo "🧼 Running Laravel post-deploy commands..."
-            docker-compose -f docker-compose.prod.yml exec app php artisan optimize:clear
-            docker-compose -f docker-compose.prod.yml exec app php artisan config:cache
-            docker-compose -f docker-compose.prod.yml exec app php artisan route:cache
-            docker-compose -f docker-compose.prod.yml exec app php artisan view:cache
-            docker-compose -f docker-compose.prod.yml exec app php artisan migrate --force
+            docker compose -f docker-compose.prod.yml exec app php artisan optimize:clear
+            docker compose -f docker-compose.prod.yml exec app php artisan config:cache
+            docker compose -f docker-compose.prod.yml exec app php artisan route:cache
+            docker compose -f docker-compose.prod.yml exec app php artisan view:cache
+            docker compose -f docker-compose.prod.yml exec app php artisan migrate --force
