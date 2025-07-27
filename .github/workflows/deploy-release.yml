@@ -34,10 +34,20 @@ jobs:
           password: ${{ secrets.DROPLET_PASSWORD }}
           script: |
             cd /var/www/gym-manager-central
+            echo "🔁 Cleaning up unused Docker resources to save disk..."
+            
+            docker container prune -f
+            docker image prune -a -f
+            docker volume prune -f
+            docker system df
+
+            echo "⬇️ Pulling latest image..."
             docker-compose -f docker-compose.prod.yml pull
+
+            echo "🚀 Restarting app container only (no DB downtime)..."
             docker-compose -f docker-compose.prod.yml up -d --no-deps app
 
-            # Laravel post-deploy
+            echo "🧼 Running Laravel post-deploy commands..."
             docker-compose -f docker-compose.prod.yml exec app php artisan optimize:clear
             docker-compose -f docker-compose.prod.yml exec app php artisan config:cache
             docker-compose -f docker-compose.prod.yml exec app php artisan route:cache
