@@ -98,3 +98,6 @@ Key variables in the `.env` file:
 | `DB_PASSWORD`       | DB password               |
 
 ---
+
+## Deployment
+- This Repo deployes automatically to mo3az014/gym-manager-central image when PR merged to release branch.
