@@ -21,14 +21,10 @@ COPY apache/laravel.conf /etc/apache2/sites-available/000-default.conf
 COPY apache/laravel-ssl.conf /etc/apache2/sites-available/default-ssl.conf
 
 
-# Enable Apache modules for environment variables
-RUN a2enmod ssl
 RUN a2enmod rewrite
 RUN a2enmod env
 
-# Enable SSL site
-RUN a2ensite default-ssl
-
+RUN a2enmod ssl && a2ensite default-ssl
 
 # Set working directory
 WORKDIR /var/www/html
